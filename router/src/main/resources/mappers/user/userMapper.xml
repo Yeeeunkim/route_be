@@ -2,9 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fhsh.router.mappers.UserMapper">
 
+    <!-- 회원수 조회 -->
     <select id="getUserCount" resultType="_int">
-        select count(*)
-          from USER
+        SELECT COUNT(*)
+          FROM T_USER
     </select>
 
+    <!-- 회원 추가 -->
+    <insert id="insertUser">
+        INSERT INTO T_USER (EMAIL
+                         , NICKNAME
+                         , PWD
+                         , CREATE_DATE)
+                    VALUES (#{email}
+                         , #{nickname}
+                         , #{encodedPwd}
+                         , NOW())
+    </insert>
+
+    <!-- 비밀번호 업데이트 -->
+    <update id="updatePwd">
+        UPDATE T_USER
+           SET PWD = #{encodedPwd}
+         WHERE USER_NO = #{userNo}
+    </update>
+
+    <!-- 회원 삭제 -->
+    <delete id="deleteUser">
+       DELETE FROM T_USER
+             WHERE USER_NO = #{userNo};
+    </delete>
 </mapper>
